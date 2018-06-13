@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "libertad",
+    "description": "Libertad Automotive S.A.",
+    "slug": "libertad",
+    "privacy": "public",
+    "sdkVersion": "27.0.0",
+    "platforms": ["android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
