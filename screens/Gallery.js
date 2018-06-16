@@ -1,7 +1,10 @@
+//React
 import React, { Component } from 'react'
+
+//Redux
 import { connect } from 'react-redux'
 
-//RN
+//React Native
 import { View, Text, StyleSheet, ScrollView, BackHandler } from 'react-native'
 
 //Navigation Actions
@@ -59,5 +62,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#000',
   },
-
 })

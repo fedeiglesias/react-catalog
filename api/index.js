@@ -52,6 +52,7 @@ export default (conf) => {
 
     //Network Error (no internet)
     let network_error_handler = (error) => {
+        console.log('Error de coneccion')
         console.log(error)
         ToastAndroid.show('No hay coneccion a internet!',ToastAndroid.LONG);
         //Change Screen

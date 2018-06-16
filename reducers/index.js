@@ -4,7 +4,6 @@ import { createNavigationReducer } from 'react-navigation-redux-helpers'
 import Navigator from '../navigation/mainStack'
 
 //Reducers
-import login from './Login'
 import account from './Account'
 import catalog from './Catalog'
 import gallery from './Gallery'

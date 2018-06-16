@@ -1,5 +1,7 @@
 //React
-import React from 'react'
+import React, {Component} from 'react'
+
+import {View} from 'react-native'
 
 //DrawerNavigator
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation'
@@ -13,12 +15,13 @@ import contentComponent from './DrawerContent'
 //Icons
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
+import Logout from './Logout'
+
 const CatalogStack = createStackNavigator({
     Catalog: { 
         screen: Main,
-    },
+    }
 })
-
 
 //Routes
 const routes = {
@@ -27,6 +30,13 @@ const routes = {
         navigationOptions: {
             drawerLabel: 'Catálogo',
             drawerIcon: ({ tintColor }) => ( <MaterialCommunityIcons name="book-open-variant" size={20} color={tintColor}/> ),
+        }
+    },
+    Logout: { 
+        screen: Logout,
+        navigationOptions: {
+            drawerLabel: 'Salir',
+            drawerIcon: ({ tintColor }) => ( <MaterialCommunityIcons name="logout" size={20} color={tintColor}/> ),
         }
     }
 }
@@ -58,3 +68,6 @@ const settings = {
 
 
 export default new createDrawerNavigator(routes,settings)
+
+
+

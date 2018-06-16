@@ -89,7 +89,7 @@ class ItemMainInfo extends React.Component {
     render(){        
         return (
             <View style={styles.root}>
-                <TouchableOpacity onPress={this.openGallery.bind(this)}>
+                <TouchableOpacity onPress={this.openGallery.bind(this)} style={styles.imgContainer}>
                     <ImageLoad
                         style={styles.img}
                         borderRadius={3}
@@ -99,6 +99,7 @@ class ItemMainInfo extends React.Component {
                         loadingStyle={{ size: 'small', color: '#00aedf' }}
                         source={this.renderGalleryCover()}
                         onPress={this.openGallery}
+                        resizeMode="contain"
                     />
                 </TouchableOpacity>
 
@@ -135,13 +136,19 @@ const styles = StyleSheet.create({
         padding: 7
     },
 
-    img: {
-        backgroundColor: 'white',
+    imgContainer: {
         width: 110,
         height: 110,
+        overflow: 'hidden',
         borderRadius: 4,
         marginRight: 10,
-        overflow: 'hidden',
+    },
+
+    img: {
+        backgroundColor: 'white',
+        width: '100%',
+        height: '100%',
+        maxWidth: '100%',
     },
 
     info: {

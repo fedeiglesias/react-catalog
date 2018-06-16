@@ -3,7 +3,7 @@ import { createStackNavigator } from 'react-navigation'
 
 //Screens
 import Login from '../screens/Login'
-import Main from '../screens/Main'
+import Loading from '../screens/Loading'
 import GalleryScreen from '../screens/Gallery'
 import QuickSearch from '../screens/QuickSearch'
 
@@ -13,6 +13,7 @@ import Drawer from './drawer'
 //Routes
 const routes = {
     Login: {screen: Login},
+    Loading: {screen: Loading},
     Drawer: { 
         screen: Drawer,
         navigationOptions: ({ navigation }) => ({
@@ -25,7 +26,7 @@ const routes = {
 
 //Settings
 const settings = {
-    initialRouteName: 'Drawer',
+    initialRouteName: 'Loading',
     headerMode: 'none',
 }
 

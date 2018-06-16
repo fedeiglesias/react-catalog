@@ -4,11 +4,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 //React Native
-import { View, Text, Animated, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { View, Text, Animated, StyleSheet, Image, TextInput, TouchableOpacity, KeyboardAvoidingView, ActivityIndicator, ToastAndroid } from 'react-native'
 
 // Actions
-import * as loginActions from '../actions/Login'
+import * as loginActions from '../actions/account/Login'
 
+//API
 import api from '../api'
 
 //Component
@@ -18,6 +19,14 @@ class Login extends Component {
     title: '',
     header: null
   })
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: this.props.username,
+      password: this.props.password
+    }
+  }
 
   render() {
     return (
@@ -32,7 +41,8 @@ class Login extends Component {
             placeholderTextColor="rgba(0,0,0,0.4)"
             underlineColorAndroid="transparent"
             editable={!this.props.loading}
-            onChangeText={text => this.props.setUsername(text)}
+            value={this.state.username}
+            onChangeText={text => { this.setState({ username: text.trim() })}}
           />
             
           <TextInput 
@@ -42,25 +52,37 @@ class Login extends Component {
             secureTextEntry
             editable={!this.props.loading}
             underlineColorAndroid="transparent"
-            onChangeText={text => {this.props.setPassword(text)}}
+            value={this.state.password}
+            onChangeText={text => { this.setState({ password: text.trim() })}}
           />
-
+          
           <TouchableOpacity 
             disabled={this.props.loading}
             style={styles.loginButton} 
-            onPress={() => this.props.login()}>
-            {
-              !this.props.loading ? 
+            onPress={() => this.props.login(this.state.username, this.state.password) }>
+            { !this.props.loading ? 
               <Text style={styles.loginButtonText}>INGRESAR</Text> : 
               <ActivityIndicator size="small" color="#fff" />
             }
           </TouchableOpacity>
-        
         </View>
       </KeyboardAvoidingView>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  username: state.account.screens.login.username,
+  password: state.account.screens.login.password,
+  loading: state.account.screens.login.loading,
+})
+
+const mapDispatchToProps = {
+  ...loginActions,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
 
 
 
@@ -107,16 +129,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 })
-
-
-const mapStateToProps = state => ({
-  username: state.login.username,
-  password: state.login.password,
-  loading: state.login.loading
-});
-
-const mapDispatchToProps = {
-  ...loginActions,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);

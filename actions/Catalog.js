@@ -3,12 +3,22 @@ import { NavigationActions } from 'react-navigation'
 import * as constants from '../constants'
 import api from '../api'
 
+import * as CatalogActions from './Catalog'
+
 export function searchWords(words){
     return {type: constants.CATALOG_SEARCH_WORDS, words: words}
 }
 
+export const loading = status => ({
+    type: constants.CATALOG_LOADING,
+    status
+})
+
 export function searchItems(query){
     return (dispatch, getState) => {
+
+        //Loading
+        dispatch(CatalogActions.loading(true))
 
         //Close dialog
         dispatch(NavigationActions.back())
@@ -21,9 +31,11 @@ export function searchItems(query){
             data: { q: query },
             response: (json) => {
 
-                //console.log(json)
-
+                //Load items
                 dispatch(this.loadItems(json.result.items, query))
+
+                //Loading
+                dispatch(CatalogActions.loading(false))
 
                 /*if(json.errors.length){
                     for(var i in json.errors) ToastAndroid.show(json.errors[i],ToastAndroid.LONG);

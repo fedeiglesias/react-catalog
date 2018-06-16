@@ -1,4 +1,7 @@
+//React
 import React, { Component } from 'react'
+
+//Redux
 import { connect } from 'react-redux'
 
 //RN
@@ -8,22 +11,31 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity, ScrollView
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 //Actions
-import * as accountActions from  '../actions/Account'
+import * as AccountActions from  '../actions/account/Account'
 
 //Header
 import MainHeader from '../navigation/headers/main'
 
+//Own components
 import Item from '../components/item'
 
+//Component
 class Main extends Component {
   static navigationOptions = MainHeader
 
-  componentDidMount() {
-    this.props.dispatch(accountActions.loadProfile())
+  componentDidMount(){
+    this.props.dispatch(AccountActions.loadProfile())
   }
 
   render(){
     
+    //Loading session...
+    if((this.props.account.session == 'loading') || this.props.catalog.loading) return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#00aedf" />
+      </View>
+    )
+
     //Loading session...
     if(this.props.account.session == 'loading') return (
       <View style={styles.loaderContainer}>
@@ -33,7 +45,7 @@ class Main extends Component {
 
     return (
       <ScrollView style={styles.container}>
-          {this.props.catalog.items.map(item => <Item data={item} key={item.id}></Item>)}
+          {this.props.catalog.items.map( (item,i) => <Item data={item} key={item.id + i}></Item>)}
       </ScrollView>
     )
   }
@@ -50,6 +62,7 @@ const mapStateToProps = state => ({
   catalog : state.catalog,
 })
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
 
 const styles = StyleSheet.create({
@@ -63,16 +76,4 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#eee',
   },
-
-  text: {
-    color: 'white',
-    fontSize: 20,
-    padding: 20,
-  },
-
-  icon: {
-    width: 24,
-    height: 24,
-  },
-
 })

@@ -1,12 +1,17 @@
+//React
 import React, { Component } from 'react'
+
+//Redux
 import { connect } from 'react-redux'
 
+//Navigation Actions
 import { NavigationActions } from 'react-navigation'
 
+//React Native
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 
-
-import api from '../api'
+//Account actions
+import * as AccountActions from '../actions/account/Account'
 
 class Loading extends Component {
 
@@ -14,47 +19,11 @@ class Loading extends Component {
     header: null
   })
 
-
- 
   componentDidMount() {
-    //Event listener on Show Screen
-    this._sub = this.props.navigation.addListener(
-      'didFocus',
-      this.didFocus
-    )
-
-    this.callAPI()
-  }
-  
-  componentDidUpdate(){
-    console.log('componentDidUpdate ')
-  }
-
-  componentWillUnmount() {
-    //Remove event listener
-    this._sub.remove();
-  }
-
-  callAPI(){
-    api({
-      module: 'cuenta',
-      action: 'info',
-      data: {},
-      response: (json) => {
-        if(json.logued)
-          this.props.dispatch(NavigationActions.navigate({ routeName: 'Main' }))
-        
-      }
-    })
-  }
- 
-  didFocus(){
-    this.callAPI()
+    this.props.dispatch(AccountActions.loadSession())
   }
 
   render() {
-    console.log('render') 
- 
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#00aedf" />
