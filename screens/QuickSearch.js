@@ -1,7 +1,10 @@
+//React
 import React, { Component } from 'react'
+
+//Redux
 import { connect } from 'react-redux'
 
-//RN
+//React Native
 import { View, Text, StyleSheet, ScrollView, BackHandler, StatusBar, TextInput, TouchableOpacity } from 'react-native'
 
 //Navigation Actions
@@ -14,7 +17,7 @@ import * as constants from '../constants/'
 import * as catalogActions from '../actions/Catalog'
 
 //Icons
-import { Feather, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 
 class QuickSearch extends Component {
     static navigationOptions = {
@@ -26,15 +29,22 @@ class QuickSearch extends Component {
         this.state = {query: this.props.query}
     }
 
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._handleBackPress)
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBackPress)
+    }
+
     _changeInput(text){
         this.setState({query: text})
     }
 
     _handleBackPress = () => {
         this.props.dispatch(NavigationActions.back())
-        return true;
+        return true
     }
-
 
     _search(){
         this.props.dispatch(catalogActions.searchItems(this.state.query))
@@ -82,7 +92,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-    query: state.catalog.query
+    query: state.catalog.query,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuickSearch)
